@@ -7,8 +7,17 @@ export class Home extends React.Component {
         console.log(props);
         this.state = {
             age: props.age,
-            level: 1
+            level: 1,
+            hideButtons: true,
+            homeLink: "Sweet-Home"
         };
+
+        setTimeout (() => {
+                this.setState({
+                    hideButtons: false
+                })
+            }, 6000
+        );
     }
 
     onGrow() {
@@ -17,6 +26,10 @@ export class Home extends React.Component {
 
     onNextLevel() {
         this.setState({level: this.state.level + 1});
+    }
+
+    onChangeLink() {
+        this.props.changeLink(this.state.homeLink);
     }
 
     render() {
@@ -30,13 +43,19 @@ export class Home extends React.Component {
                     </ul>
                 </div>
                 {this.props.children}
-                <hr/>
-                <button className="btn btn-primary" onClick={() => this.onGrow()}>
-                    Click Me to Grow
-                </button>&nbsp;&nbsp;
-                <button className="btn btn-primary" onClick={() => this.onNextLevel()}>
-                    Next Level
-                </button>
+                <button className="btn btn-primary" onClick={this.props.greet}>Greet</button>
+                <hr/>                
+                <div hidden={this.state.hideButtons}>
+                    <button className="btn btn-primary" onClick={() => this.onGrow()}>
+                        Click Me to Grow
+                    </button>&nbsp;
+                    <button className="btn btn-primary" onClick={() => this.onNextLevel()}>
+                        Next Level
+                    </button>&nbsp;
+                    <button className="btn btn-primary" onClick={() => this.onChangeLink()}>
+                        Change Link
+                    </button>
+                </div>
             </div>
         );
     }
@@ -45,5 +64,7 @@ export class Home extends React.Component {
 Home.PropTypes = {
     name: React.PropTypes.string,
     age: React.PropTypes.number,
-    ch: React.PropTypes.object
+    ch: React.PropTypes.object,
+    greet: React.PropTypes.func,
+    changeLink: React.PropTypes.func
 };

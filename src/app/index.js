@@ -3,9 +3,23 @@ import {render} from "react-dom";
 import {Header} from "./components/Header";
 import {Home} from "./components/Home";
 
-console.log("Log Message");
-
 class App extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            homeLink: "Home"
+        };
+    }
+
+    greet() {
+        alert("Welcome to ReactJS","Welcome");
+    }
+
+    onChangeLinkName(linkName) {
+        this.setState({homeLink: linkName});                    
+    }
+
     render() {
         var choice = {
             name: "Sports",
@@ -13,16 +27,20 @@ class App extends React.Component {
         };
         return (
             <div className="container">
-                <hr/>
                 <div className="row">
                     <div className="col-xs-10 col-xs-offset-0">
-                        <Header/>
+                        <Header homeLink={this.state.homeLink}/>
                     </div>
-                </div>
-                <hr/>                
+                </div>            
                 <div className="row">
                     <div className="col-xs-10 col-xs-offset-0">
-                        <Home name={"Kavien"} age={5} ch={choice}>
+                        <Home 
+                            name={"Kavien"} 
+                            age={5} ch={choice} 
+                            greet={this.greet}
+                            greetMessage={this.state.greetMessage}
+                            changeLink={this.onChangeLinkName.bind(this)}
+                        >
                             <p>I like Daddy.</p>
                         </Home>
                     </div>
